@@ -13,6 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
+      {/* <CompA /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
