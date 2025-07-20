@@ -1,62 +1,51 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TextField from "../components/TextField";
+import registerField from "../config/registerField";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    userName: "",
+    phone: "",
+    address: "",
+    confirmPassword: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email);
+    console.log(formData);
+    navigate("/login");
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   return (
-    <>
+    <div className="flex items-center justify-center flex-col h-screen">
       <div>Register</div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <TextField
-          id={"email"}
-          label={"Email"}
-          placeholder={"email@gmail.com"}
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          id={"username"}
-          label={"Username"}
-          placeholder={"JohnDoe"}
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-        />
-        <TextField
-          id={"phone"}
-          label={"Phone Number"}
-          placeholder={"9800000000"}
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        <TextField
-          id={"password"}
-          label={"Password"}
-          placeholder={"**********"}
-          value={password}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <TextField
-          id={"confirmPassword"}
-          label={"Confirm Password"}
-          placeholder={"**********"}
-          type="password"
-          value={confirmpassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 border p-4">
+        {registerField.map(({ id, label, placeholder, type, name }) => (
+          <TextField
+            key={name}
+            id={id}
+            name={name}
+            label={label}
+            placeholder={placeholder}
+            type={type}
+            value={formData[name]}
+            onChange={handleChange}
+          />
+        ))}
+
+        <button type="submit">Submit</button>
       </form>
-    </>
+    </div>
   );
 };
 

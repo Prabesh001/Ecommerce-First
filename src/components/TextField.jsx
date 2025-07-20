@@ -1,18 +1,20 @@
 const TextField = ({
-  label="TextField",
+  label = "TextField",
   onChange,
+  name,
   id,
-  placeholder="placeholder",
+  placeholder = "placeholder",
   value,
   required = false,
-  type="text"
+  type = "text",
 }) => {
   return (
-    <div className="flex gap-3">
+    <div className="flex flex-col gap-3">
       <label htmlFor={id}>{label}</label>
       <input
-        className="border border-gray-600 rounded p-2"
+        className="border border-gray-600 rounded p-2 w-[200px] sm:w-[300px]"
         type={type}
+        name={name}
         id={id}
         placeholder={placeholder}
         value={value}
