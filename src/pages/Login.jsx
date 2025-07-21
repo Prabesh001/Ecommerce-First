@@ -1,17 +1,26 @@
 import { useState } from "react";
 import TextField from "../components/TextField";
+import { loginField } from "../config/loginField";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const initialValue = {
+    email: "",
+    password: "",
+  };
+  
+  const [formData, setFormData] = useState(initialValue);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    alert("Hello!");
+    console.table(formData);
 
-    console.log("email", email);
-    console.log("password", password);
+    setFormData(initialValue);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   return (
@@ -23,24 +32,18 @@ const Login = () => {
             onSubmit={handleSubmit}
             className="p-4 border flex flex-col gap-4 items-start"
           >
-            {/* Email */}
-            <TextField
-              label={"Email"}
-              id={"email"}
-              value={email}
-              placeholder={"email@gmail.com"}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            {/* Password */}
-            <TextField
-              label={"Password"}
-              id={"password"}
-              value={password}
-              placeholder={"*******"}
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-            />
+            {loginField.map(({ id, label, placeholder, type, name }) => (
+              <TextField
+                key={name}
+                id={id}
+                name={name}
+                label={label}
+                placeholder={placeholder}
+                type={type}
+                value={formData[name]}
+                onChange={handleChange}
+              />
+            ))}
 
             {/* Submit button */}
             <button type="submit">Submit</button>

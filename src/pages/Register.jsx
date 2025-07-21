@@ -1,23 +1,56 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import registerField from "../config/registerField";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     userName: "",
     phone: "",
-    address: "",
     confirmPassword: "",
   });
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    const handdleSaveCookie = async () => {
+      try {
+        await axios.get("http://localhost:4000/test", {
+          withCredentials: true,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    handdleSaveCookie();
+  }, []);
+
+  const handlePostOperation = async (url, data) => {
+    try {
+      const result = await axios.post(url, data);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    navigate("/login");
+    console.table(formData);
+
+    const response = await handlePostOperation(
+      "http://localhost:4000/api/auth/register",
+      formData
+    );
+
+    console.log(response);
+
+    if (response.status === 201) {
+      alert("User registered Sucessfully!");
+    } else {
+      alert("User registration failed!");
+    }
+    // navigate("/login");
   };
 
   const handleChange = (e) => {
