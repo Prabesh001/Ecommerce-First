@@ -2,55 +2,37 @@ import { useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import registerField from "../config/registerField";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { handlePostOperation } from "../config/handlePostOperation";
+import { BASE_URL, registerInitialValue } from "../config/constants";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    userName: "",
-    phone: "",
-    confirmPassword: "",
-  });
+  const [formData, setFormData] = useState(registerInitialValue);
 
-  useEffect(() => {
-    const handdleSaveCookie = async () => {
-      try {
-        await axios.get("http://localhost:4000/test", {
-          withCredentials: true,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    handdleSaveCookie();
-  }, []);
-
-  const handlePostOperation = async (url, data) => {
-    try {
-      const result = await axios.post(url, data);
-      return result;
-    } catch (error) {
-      return error;
-    }
+  const handdleSaveCookie = () => {
+    Cookies.set("name", "Prabesh");
   };
+
+  const handleClearCookie = () => {
+    Cookies.remove("name");
+  };
+
+  const name = Cookies.get("name");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.table(formData);
 
-    const response = await handlePostOperation(
-      "http://localhost:4000/api/auth/register",
-      formData
-    );
+    const response = await handlePostOperation("/auth/register", formData);
 
     console.log(response);
 
     if (response.status === 201) {
       alert("User registered Sucessfully!");
+      setFormData(registerInitialValue);
     } else {
       alert("User registration failed!");
     }
-    // navigate("/login");
   };
 
   const handleChange = (e) => {
@@ -60,6 +42,13 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center flex-col h-screen">
+      {name}
+      <button onClick={handleClearCookie} className="border">
+        Clear Cookie
+      </button>
+      <button onClick={handdleSaveCookie} className="border">
+        Add Cookie
+      </button>
       <div>Register</div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 border p-4">
