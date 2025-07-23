@@ -1,21 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import { loginField } from "../config/loginField";
+import { handlePostOperation } from "../config/handlePostOperation";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+
+
+
+  const navigate = useNavigate();
   const initialValue = {
     email: "",
     password: "",
   };
-  
+
   const [formData, setFormData] = useState(initialValue);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.table(formData);
+    const response = await handlePostOperation("/auth/login", formData);
 
-    setFormData(initialValue);
+    console.log(response);
+
+    if (response.status === 200) {
+      alert(response.data.message || "Login Successful!");
+      setFormData(initialValue);
+      localStorage.setItem("authToken", response.data.token);
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    } else {
+      alert(response.response.data || "Login Failed!");
+    }
   };
 
   const handleChange = (e) => {
@@ -44,6 +63,10 @@ const Login = () => {
                 onChange={handleChange}
               />
             ))}
+
+            <Link to="/forgot-password" className="text-blue-500">
+              Forgot Password?
+            </Link>
 
             {/* Submit button */}
             <button type="submit">Submit</button>

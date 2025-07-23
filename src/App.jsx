@@ -10,6 +10,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Navbar from "./components/Navbar";
 
 function App() {
+
   return (
     <BrowserRouter>
       <Navbar />

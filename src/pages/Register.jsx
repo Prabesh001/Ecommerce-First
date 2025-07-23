@@ -1,23 +1,40 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TextField from "../components/TextField";
 import registerField from "../config/registerField";
-import axios from "axios";
-import Cookies from "js-cookie";
 import { handlePostOperation } from "../config/handlePostOperation";
-import { BASE_URL, registerInitialValue } from "../config/constants";
+import {  registerInitialValue } from "../config/constants";
 
 const Register = () => {
   const [formData, setFormData] = useState(registerInitialValue);
+  // const [name, setName] = useState(
+  //   JSON.parse(localStorage.getItem("name")) || ""
+  // );
 
-  const handdleSaveCookie = () => {
-    Cookies.set("name", "Prabesh");
-  };
+  // // localStorage.setItem("name", "Prabesh") //setting value
+  // // localStorage.getItem("name") //getting value
+  // // localStorage.removeItem("name") //removing value
+  // // localStorage.clear() //clearing all values
 
-  const handleClearCookie = () => {
-    Cookies.remove("name");
-  };
+  // useEffect(() => {
+  //   // setName(JSON.parse(localStorage.getItem("name")) || "");
+  //   localStorage.setItem("authToken", "1234567890abcdefg");
+  //   localStorage.setItem("email", "pr@gmail.com");
+  // }, []);
 
-  const name = Cookies.get("name");
+  // const handdleSaveCookie = () => {
+  //   // Cookies.set("name", "Prabesh");
+  //   setName(localStorage.setItem("name", JSON.stringify({ name: "Prabesh" })));
+  // };
+
+  // const handleClearCookie = () => {
+  //   // Cookies.remove("name");
+  //   localStorage.removeItem("name");
+  //   setName("");
+  // };
+
+  // const clearAll = () => {
+  //   localStorage.clear();
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,13 +59,6 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center flex-col h-screen">
-      {name}
-      <button onClick={handleClearCookie} className="border">
-        Clear Cookie
-      </button>
-      <button onClick={handdleSaveCookie} className="border">
-        Add Cookie
-      </button>
       <div>Register</div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 border p-4">
