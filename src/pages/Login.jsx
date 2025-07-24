@@ -2,13 +2,9 @@ import { useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import { loginField } from "../config/loginField";
 import { handlePostOperation } from "../config/handlePostOperation";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-
-
-
   const navigate = useNavigate();
   const initialValue = {
     email: "",

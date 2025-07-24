@@ -1,14 +1,32 @@
 import { useState } from "react";
 import TextField from "../components/TextField";
+import { handlePostOperation } from "../config/handlePostOperation";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setEmail("");
+  const navigate = useNavigate();
 
-    console.table(email);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await handlePostOperation("/auth/forgot-password", {
+      email,
+    });
+
+    console.log(response);
+
+    if (response.status === 200) {
+      alert(response.data.message || "OTP Sent!");
+      localStorage.setItem("email", email);
+
+      setTimeout(() => {
+        navigate("/verify-otp");
+      }, 1500);
+    } else {
+      alert(response.response.data || "Error sending otp!");
+    }
+    console.log(email);
   };
 
   return (

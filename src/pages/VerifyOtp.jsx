@@ -1,12 +1,29 @@
 import { useState } from "react";
 import TextField from "../components/TextField";
+import { handlePostOperation } from "../config/handlePostOperation";
+import { useNavigate } from "react-router-dom";
 
 const VerifyOtp = () => {
   const [otp, setOtp] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setOtp("");
+    const response = await handlePostOperation("/auth/verify-otp", {
+      otp,
+    });
+
+    console.log(response);
+
+    if (response.status === 200) {
+      alert(response.data.message || "OTP verified!");
+
+      setTimeout(() => {
+        navigate("/reset-password");
+      }, 1500);
+    } else {
+      alert(response.response.data.error || "Error verifing otp!");
+    }
 
     console.table(otp);
   };

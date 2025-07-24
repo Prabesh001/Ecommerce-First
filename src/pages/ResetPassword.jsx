@@ -1,6 +1,8 @@
 import { useState } from "react";
 import TextField from "../components/TextField";
 import { resetField } from "../config/loginField";
+import { handlePostOperation } from "../config/handlePostOperation";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const initialValue = {
@@ -8,18 +10,38 @@ const ResetPassword = () => {
     confirmPassword: "",
   };
 
-  const [formData, setFormData] = useState(initialValue);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormData(initialValue);
-  };
+  const [formData, setFormData] = useState(initialValue);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    const response = await handlePostOperation("/auth/reset-password", {
+      password: formData.password,
+    });
+
+    console.log(response);
+
+    if (response.status === 200) {
+      alert(response.data.message || "Password reset successful!");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
+    } else {
+      alert(response.response.data || "Error reseting password");
+    }
+  };
   return (
     <>
       <div className="h-screen flex flex-col items-center justify-center">
