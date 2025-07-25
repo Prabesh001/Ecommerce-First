@@ -25,7 +25,7 @@ const registerField = [
       name: "phone",
       label: "Phone",
       placeholder: 9800000000,
-      type: "text",
+      type: "number",
     },
     {
       id: "userName",

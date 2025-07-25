@@ -31,7 +31,7 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <div className="h-screen flex flex-col items-center justify-center">
+      <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center">
         <div>Forgot Password</div>
         <div>
           <form

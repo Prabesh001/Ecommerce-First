@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextField from "../components/TextField";
 import { resetField } from "../config/loginField";
 import { handlePostOperation } from "../config/handlePostOperation";
@@ -18,6 +18,15 @@ const ResetPassword = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    const isOtpVerified = localStorage.getItem("isOtpVerified");
+    if (!email || !isOtpVerified) {
+      // alert("No email found. Please request a new OTP.");
+      navigate("/verify-otp");
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,9 +51,10 @@ const ResetPassword = () => {
       alert(response.response.data || "Error reseting password");
     }
   };
+  
   return (
     <>
-      <div className="h-screen flex flex-col items-center justify-center">
+      <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center">
         <div>Reset Password</div>
         <div>
           <form
@@ -56,6 +66,7 @@ const ResetPassword = () => {
                 key={name}
                 id={id}
                 name={name}
+                autoFocusOn="password"
                 label={label}
                 placeholder={placeholder}
                 type={type}

@@ -2,39 +2,10 @@ import { useState } from "react";
 import TextField from "../components/TextField";
 import registerField from "../config/registerField";
 import { handlePostOperation } from "../config/handlePostOperation";
-import {  registerInitialValue } from "../config/constants";
+import { registerInitialValue } from "../config/constants";
 
 const Register = () => {
   const [formData, setFormData] = useState(registerInitialValue);
-  // const [name, setName] = useState(
-  //   JSON.parse(localStorage.getItem("name")) || ""
-  // );
-
-  // // localStorage.setItem("name", "Prabesh") //setting value
-  // // localStorage.getItem("name") //getting value
-  // // localStorage.removeItem("name") //removing value
-  // // localStorage.clear() //clearing all values
-
-  // useEffect(() => {
-  //   // setName(JSON.parse(localStorage.getItem("name")) || "");
-  //   localStorage.setItem("authToken", "1234567890abcdefg");
-  //   localStorage.setItem("email", "pr@gmail.com");
-  // }, []);
-
-  // const handdleSaveCookie = () => {
-  //   // Cookies.set("name", "Prabesh");
-  //   setName(localStorage.setItem("name", JSON.stringify({ name: "Prabesh" })));
-  // };
-
-  // const handleClearCookie = () => {
-  //   // Cookies.remove("name");
-  //   localStorage.removeItem("name");
-  //   setName("");
-  // };
-
-  // const clearAll = () => {
-  //   localStorage.clear();
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +29,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col h-screen">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center flex-col">
       <div>Register</div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 border p-4">

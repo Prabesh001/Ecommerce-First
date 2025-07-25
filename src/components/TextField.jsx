@@ -7,19 +7,28 @@ const TextField = ({
   value,
   required = false,
   type = "text",
+  autoFocusOn = "email",
+  maxLength = 40,
 }) => {
   return (
-    <div className="flex flex-col gap-3">
-      <label htmlFor={id}>{label}</label>
+    <div className="flex flex-col gap-1">
+      <label htmlFor={id} className="text-sm text-gray-700">
+        {label} {required && "*"}
+      </label>
       <input
-        className="border border-gray-600 rounded p-2 w-[200px] sm:w-[300px]"
+        className="auth-input"
         type={type}
+        inputMode={type === "number" ? "numeric" : "text"}
         name={name}
         id={id}
+        pattern={type === "number" && "d*"}
+        // autoComplete="off"
         placeholder={placeholder}
         value={value}
+        autoFocus={id === autoFocusOn}
         required={required}
         onChange={onChange}
+        maxLength={maxLength}
       />
     </div>
   );

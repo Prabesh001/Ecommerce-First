@@ -40,12 +40,12 @@ const Login = () => {
 
   return (
     <>
-      <div className="h-screen flex flex-col items-center justify-center">
+      <div className="min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center">
         <div>Login</div>
         <div>
           <form
             onSubmit={handleSubmit}
-            className="p-4 border flex flex-col gap-4 items-start"
+            className="p-4 border flex flex-col gap-4 items-start justify-center box-sd"
           >
             {loginField.map(({ id, label, placeholder, type, name }) => (
               <TextField
@@ -60,7 +60,10 @@ const Login = () => {
               />
             ))}
 
-            <Link to="/forgot-password" className="text-blue-500">
+            <Link
+              to="/forgot-password"
+              className="text-blue-500 text-right w-full underline underline-offset-6"
+            >
               Forgot Password?
             </Link>
 
